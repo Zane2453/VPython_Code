@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Remote_control_{{odm_name}}</title>
+    <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+
+    <script src="/da/CyberPhysic/static/jquery.min.js"></script>    
+    <script src="/da/CyberPhysic/static/autobind_ajax.js"></script>
+    <script src="/da/CyberPhysic/static/csmapi.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/da/CyberPhysic/static/css/slider.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+</head>
+<body>
+    {% set count=0 %}
+    {{ odf_list }}
+    {% for df in odf_list%}
+        <div class="slidecontainer idf-block" name="{{'RangeSlider'+str(count)}}">
+            <div class="column slider">
+              <h4>{{ df[0] }}</h4>
+              <input type="range" min="0" max="100" step="1" value="50">
+            </div>
+        </div>
+        {% set count = count + 1 %}
+    {% end %}    
+
+    <script src="/da/CyberPhysic/static/mobile_rc_main.js"></script>
+</body>
+</html>

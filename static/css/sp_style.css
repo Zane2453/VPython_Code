@@ -1,0 +1,26 @@
+html,body{
+	height: 100%;	
+	margin: 0px 0px 0px 0px;
+}
+
+#device-iframe{
+	height: 100%;
+	width: 100%;
+	border: none;
+	display: inline-block;
+}
+
+#resetBtn{
+	display: inline-block;
+	position: absolute;
+	top: 40px;
+	right: 0px;
+	font-size: 20px;
+	border: dashed;
+	border-width: 0.5px;
+	border-color: lightgray;
+	border-radius: 6px;
+	color: lightgray;
+	text-align: center;
+	padding-bottom: 3px;
+}

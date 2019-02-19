@@ -1,0 +1,62 @@
+html,body{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+#title{
+	font-size: 25px;
+	margin-bottom: 20px;
+}
+
+.container{	
+	height: 100%;
+	overflow-x: hidden;
+}
+
+img{
+	width: 100%;
+	height: auto;
+}
+
+#device-iframe{
+	width: 80%;
+	height: 80%;
+	border: none;
+}
+
+#explanation{
+	display: inline-block;
+	font-size: 15px;
+}
+
+#mid-col{
+	height: 100%;
+}
+
+#left-col{
+	height: 100%;
+}
+
+.qrcode{
+	margin-bottom: 20px;
+}
+@media only screen and (max-width: 767px){
+
+	#left-col{
+		text-align: center;
+	}
+
+	#title{
+		font-size: 15px;
+	}
+/*
+	#device-iframe{
+		width: 80%;
+		
+	}
+*/
+	.container{   
+	    text-align: center;
+	}
+}
