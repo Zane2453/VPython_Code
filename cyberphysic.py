@@ -3,6 +3,7 @@ import tornado.web
 import os
 import config
 import requests
+import json
 
 """
 project_iframe_reset={
@@ -12,8 +13,6 @@ project_iframe_reset={
 """
 # project_iframe_reset={}
 
-#[TODO]periodically check if project has excepction 'The device is offline'?
-p_id_set = {} 
 
 def make_app():
 
@@ -27,6 +26,7 @@ def make_app():
     settings = dict(
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
         static_path=os.path.join(os.path.dirname(__file__), "static"),
+        debug=True
     )
     
     return tornado.web.Application(route, **settings)
@@ -67,15 +67,12 @@ class rcHandler(tornado.web.RequestHandler):
 
         #todo send post request (get_df_list_from_dm_id) to iottalk
         r = requests.post("http://140.113.215.18:7788/get_df_list_from_dm_id", data={'dm_id': odm_id})
-        print(r.status_code, r.reason)
-        print(r.text)
-        odf_list = r.text
+        odf_list = tornado.escape.json_decode(r.text)
         self.render("da/mobile_rc.html", odm_name=odm_name, p_id=p_id, in_do_id=in_do_id, odf_list=odf_list)
 
 class daHandler(tornado.web.RequestHandler):
     def get(self, **kwargs):
         vp_file_name = kwargs.get('vp_file_name')
-        print('vp_file_name ',vp_file_name)
         no_cache_headers = {
             'Cache-Control': ('no-store, no-cache, must-revalidate, '
                               'post-check=0, pre-check=0, max-age=0'),

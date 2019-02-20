@@ -1,3 +1,7 @@
+/*
+    [TODO]
+    create project and create connection done by server, not html
+*/
 $( window ).on( "load",  function () {
     check_project_name_is_exist();
 });

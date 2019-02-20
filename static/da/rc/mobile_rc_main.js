@@ -1,56 +1,26 @@
 var mac_addr = 'Remote_control_' + odm_name;
 var passwd = undefined;
 
+
 $(function () {
-
-    // var ip = 'http://'+location.hostname;
-        var do_id = "{{in_do_id}}";
-        var p_id = "{{p_id}}";
-        var odm_name = "{{odm_name}}";
-        var odf_list = JSON.parse('{{ odf_list | tojson }}');
-        console.log('odf_list', odf_list, typeof(odf_list) );
-        var registered = false;
-        var d_name = p_id + '.Control_' + odm_name;
-
-        $( window ).on( "load",  function () {
-            //check_iframe_loaded();
-            check_device_registered();
-
-        });
-
-        function check_device_registered(){
-
-            if(!registered){
-                window.setTimeout(check_device_registered,100);
-            }else{
-                //if device is already registered,query d_id
-                query_d_id();
-            }
-        }
-
-        //用d_name來query d_id
-        function query_d_id(){
-            var form_data = new FormData();
-            form_data.append('d_name', d_name);
-
-            var d_id = my_ajax(iottalk_ip, ccm_port, '/get_d_id_from_d_name',form_data);
-            bind_device(d_id);
-        }   
-        
-        //bind device
-        function bind_device(d_id){
-            var device_save_info = [ do_id, d_name, d_id];
-            var form_data = new FormData();
-            form_data.append('device_save_info', JSON.stringify(device_save_info));
-
-            my_ajax(iottalk_ip, ccm_port, '/bind_device',form_data);
-        }
-
-
+    
+    
+    check_device_registered();
     initial();
     slider_handler();
 
 });
+
+function check_device_registered(){
+    if(!registered){
+        window.setTimeout(check_device_registered,100);
+    }else{
+        //if device is already registered,query d_id
+        query_d_id(d_name, function(response){
+            bind_device(do_id, d_name, response);
+        });
+    }
+}
 
 function initial(){
 
@@ -63,19 +33,20 @@ function initial(){
     var profile = {};
     profile['d_name'] = d_name;
     profile['dm_name'] = 'Remote_control_' + odm_name;
-    profile['df_list'] = ['RangeSlider1','RangeSlider2'];
+    profile['df_list'] = [];
 
-    /*
-    df_list.forEach(function(element){
-        profile['df_list'].push(element[0]);
+	$('.slidecontainer').each(function(index){
+        console.log(index);
+        console.log($(this).attr('name'));
+        profile['df_list'].push($(this).attr('name'));
+       
     });
-	*/
 
-    console.log('profile : df_list', profile['df_list']);
+    console.log('profile: ', profile);
 
     profile['is_sim'] = false;
 
-    csmapi.set_endpoint(ip+":9999");
+    csmapi.set_endpoint(iottalk_ip + ":9999");
     csmapi.register(mac_addr, profile, register_callback);
 
 }
@@ -116,16 +87,6 @@ function slider_handler(){
             push(idf,parseFloat(value));
         }
     });
-    /*
-    $('.range-slider').on('change',function(){
-        //初始值是0、1時，介面顯示會有問題，所以初始值設0、100，再除以100
-        var value = ($(this).val() / 100);
-        var idf = $(this).parent().parent().attr('name');
-        $(this).parent().siblings('.value_label').text('val: ' + value);
-        push(idf,parseFloat(value));
-    });
-    */
-
 }
 
 // Shared function
