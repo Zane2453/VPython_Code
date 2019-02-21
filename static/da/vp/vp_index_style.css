@@ -4,8 +4,12 @@ html,body{
 	text-align: center;
 }
 
+div{
+	margin-top: 20px;
+}
+
 #title{
-	font-size: 25px;
+	font-size: 35px;
 	margin-bottom: 20px;
 }
 
@@ -19,21 +23,6 @@ img{
 	height: auto;
 }
 
-#device-iframe{
-	width: 80%;
-	height: 80%;
-	border: none;
-}
-
-#explanation{
-	display: inline-block;
-	font-size: 15px;
-}
-
-#mid-col{
-	height: 100%;
-}
-
 #left-col{
 	height: 100%;
 }
@@ -41,22 +30,30 @@ img{
 .qrcode{
 	margin-bottom: 20px;
 }
-@media only screen and (max-width: 767px){
 
+@media only screen and (max-width: 767px){
 	#left-col{
 		text-align: center;
+		height: auto;
 	}
 
 	#title{
-		font-size: 15px;
+		font-size: 25px;
 	}
-/*
-	#device-iframe{
-		width: 80%;
-		
-	}
-*/
+
 	.container{   
 	    text-align: center;
+	}
+
+	div{
+		margin-top: 10px;
+	}
+
+	canvas{
+		width: 100%;
+	}
+
+	#qrcode{
+		width: 50%;
 	}
 }

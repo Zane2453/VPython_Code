@@ -47,7 +47,7 @@ class choose_vp_handler(tornado.web.RequestHandler):
 
 class chooseProjectHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("choose_vp.html")
+        self.render("main_page.html")
 
 #todo check model name exist or not
 class projectHandler(tornado.web.RequestHandler):

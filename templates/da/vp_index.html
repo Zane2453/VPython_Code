@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="/static/da/vp/vp_page_style.css">
+    <link rel="stylesheet" type="text/css" href="/static/da/vp/vp_index_style.css">
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<title>project -- {{odm_name}}</title>
 	<script src="/static/jquery.min.js"></script>
@@ -22,11 +22,11 @@
 </head>
 
 <body>
-	<div class="col-xs-6 col-sm-4 col-md-2 col-lg-2" id="left-col">
+	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3" id="left-col">
 		<div id="title">Please scan following QRCode</div>
 		<img id="qrcode" src="">
 	</div>
-	<div class="col-xs-12 col-sm-8 col-md-10 col-lg-10 container ">	
+	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 container ">	
 		<div id="glowscript" class="glowscript"></div>
 	</div>
 	
@@ -51,9 +51,7 @@
 	    'na_id_list':[],
 	    'fn_id_list':[], 
 	};
-
 	var odo_created = false,ido_created = false;
-
 	project_info.output_device_info.dm_name = "{{odm_name}}";
 
 </script>
