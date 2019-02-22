@@ -104,7 +104,7 @@ const playAudio = function(filename) {
 const execute = function (code) {
   const options = {
     lang: 'vpython',
-    version: 2.1
+    version: 2.7
   };
 
   const js_code = glowscript_compile(code, options);
