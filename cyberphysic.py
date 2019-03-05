@@ -1,9 +1,13 @@
 import tornado.ioloop
 import tornado.web
 import os
-import config
 import requests
 import json
+import math
+import sys
+
+import config
+import project_manage
 
 """
 project_iframe_reset={
@@ -13,6 +17,8 @@ project_iframe_reset={
 """
 # project_iframe_reset={}
 
+vp_list = ['Ball-throw2', 'Precession', 'Snakepend', 'Universe']
+
 
 def make_app():
 
@@ -21,6 +27,9 @@ def make_app():
         (r"/project/(?P<odm_name>.*)", projectHandler),
         (r"/rc/(?P<odm_name>.*)/(?P<p_id>.*)/(?P<odm_id>.*)/(?P<in_do_id>.*)", rcHandler),
         (r"/da/vp/py/(?P<vp_file_name>.*)", daHandler),
+        (r"/images/(.*)", tornado.web.StaticFileHandler, {'path': './vp/image'}),
+        (r"/audio/(.*)", tornado.web.StaticFileHandler, {'path': './vp/audio'}),
+        (r"/delete_project/(?P<p_id>.*)", deleteProjectHandler),
     ]
 
     settings = dict(
@@ -49,25 +58,32 @@ class chooseProjectHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("main_page.html")
 
-#todo check model name exist or not
 class projectHandler(tornado.web.RequestHandler):
     def get(self, **kwargs):
         print(kwargs)
         odm_name = kwargs.get('odm_name')
-        self.render("da/vp_index.html", odm_name=odm_name)
+        if odm_name in vp_list:
+            cur_p_id = project_manage.create_project_handler(odm_name)
+            project_info = project_manage.project_set[cur_p_id]
+            #TODO save out dm_name
+            url = config.iottalk_ip + ":"+ str(config.port) + "/rc/"+ project_info['output_device_info']['dm_name'] + "/" +str(cur_p_id)+\
+            "/"+str(project_info['output_device_info']['dm_id'])+\
+            "/"+str(project_info['input_device_info']['do_id'])
+            self.render("da/vp_index.html", p_id=cur_p_id, odm_name=odm_name, url=url, odo_id=project_info['output_device_info']['do_id'])
+        else:
+            self.redirect('/')
 
 #todo check all param
 class rcHandler(tornado.web.RequestHandler):
     def get(self, **kwargs):
-        print(kwargs)
         odm_name = kwargs.get('odm_name')
         p_id = kwargs.get('p_id')
         odm_id = kwargs.get('odm_id')
         in_do_id = kwargs.get('in_do_id')
 
-        #todo send post request (get_df_list_from_dm_id) to iottalk
-        r = requests.post("http://140.113.215.18:7788/get_df_list_from_dm_id", data={'dm_id': odm_id})
+        r = requests.post(config.iottalk_ip+":"+config.ccm_port+"/get_df_list_from_dm_id", data={'dm_id': odm_id})
         odf_list = tornado.escape.json_decode(r.text)
+        print('odf_list: ',odf_list)
         self.render("da/mobile_rc.html", odm_name=odm_name, p_id=p_id, in_do_id=in_do_id, odf_list=odf_list)
 
 class daHandler(tornado.web.RequestHandler):
@@ -85,8 +101,24 @@ class daHandler(tornado.web.RequestHandler):
         f = open(os.path.join(os.getcwd(), "vp/py/"+vp_file_name), "r")
         self.write(f.read())
 
+class deleteProjectHandler(tornado.web.RequestHandler):
+    def delete(self, **kwargs):
+        p_id = kwargs.get('p_id')
+        print('delete_project p_id=',p_id)
+        project_manage.delete_project_handler(p_id)
+        self.write('ok')
+
+def stop_tornado():
+    ioloop = tornado.ioloop.IOLoop.current()
+    ioloop.add_callback(ioloop.stop)
+    print("Asked Tornado to exit")
+
 
 if __name__ == "__main__":
+
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'stop':
+            stop_tornado()
     app = make_app()
     app.listen(config.port)
     tornado.ioloop.IOLoop.current().start()

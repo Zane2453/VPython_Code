@@ -1,6 +1,5 @@
 // var id = 'VPython';
 // var project = window.location.hash.replace(/^#/,'');
-var project = project_info.output_device_info.dm_name;
 
 const dai = function (profile) {
     // csmapi.set_endpoint (window.location.origin);
@@ -63,8 +62,7 @@ const dai = function (profile) {
 
     function init_callback (result) {
         // document.title = profile.d_name;
-        project_info.d_name = profile.d_name;
-        project_info.output_device_info.mac_addr = mac_addr;
+        d_name = profile.d_name;
     }
 
     function deregisterCallback (result) {
@@ -90,7 +88,7 @@ var audio = {}
 
 const preloadAudio = function(filename) {
   if (audio[filename] == undefined) {
-    audio[filename] = new Audio('/da/vp/audio/' + filename);
+    audio[filename] = new Audio('/audio/' + filename);
   }
 };
 
@@ -133,7 +131,7 @@ window.__context = {
 var originHash;
 $(function () {
   originHash = window.location.hash;
-  fetch_code('/da/vp/py/'+ project + '.py');
+  fetch_code('/da/vp/py/'+ odm_name + '.py');
 });
 
 $(window).on('hashchange', function (a) {

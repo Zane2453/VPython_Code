@@ -5,57 +5,39 @@
 
     <link rel="stylesheet" type="text/css" href="/static/da/vp/vp_index_style.css">
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<title>project -- {{odm_name}}</title>
-	<script src="/static/jquery.min.js"></script>
-	<script src="/static/config.js"></script>
+    <title>project -- {{odm_name}}</title>
+    <script src="/static/jquery.min.js"></script>
+    <script src="/static/config.js"></script>
 
-	<script src="/static/da/utility.js"></script>
-	<script src="/static/da/csmapi.js"></script>
+    <script src="/static/da/utility.js"></script>
+    <script src="/static/da/csmapi.js"></script>
 
-	<script src="/static/da/vp/jquery.mousewheel.js"></script>
-	<script src="/static/da/vp/jquery-ui.custom.min.js"></script>
-	<script src="/static/da/vp/RScompiler.2.7.min.js"></script>
-	<script src="/static/da/vp/RSrun.2.7.min.js"></script>
-	<script src="/static/da/vp/compiler.2.7.min.js"></script>
-	<script src="/static/da/vp/glow.2.7.min.js"></script>
-	<script src="/static/da/vp/dan.js"></script>
+    <script src="/static/da/vp/jquery.mousewheel.js"></script>
+    <script src="/static/da/vp/jquery-ui.custom.min.js"></script>
+    <script src="/static/da/vp/RScompiler.2.7.min.js"></script>
+    <script src="/static/da/vp/RSrun.2.7.min.js"></script>
+    <script src="/static/da/vp/compiler.2.7.min.js"></script>
+    <script src="/static/da/vp/glow.2.7.min.js"></script>
+    <script src="/static/da/vp/dan.js"></script>
 </head>
 
 <body>
-	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3" id="left-col">
-		<div id="title">Ple<span id='hidden_link'>a</span>se scan following QRCode</div>
-		<img id="qrcode" src="">
-	</div>
-	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 container ">	
-		<div id="glowscript" class="glowscript"></div>
-	</div>
-	
-<script type="text/javascript">
-	var project_info = {
-	    'p_id':null,
-	    'proj_name':null,
-	    'd_name':null,
-	    'input_device_info':{
-	    	'dm_name': null,
-	    	'dm_id': null,
-	    	'do_id': 0,
-			'df_list': [], //[{'id':df_id, 'name:', df_name}]
-	    },
-	    'output_device_info':{
-	    	'dm_name': null,
-	    	'dm_id': null,
-			'do_id': 0,
-			'df_list':[], //[{'id':df_id, 'name:', df_name}]
-			'mac_addr': null,
-	    },
-	    'na_id_list':[],
-	    'fn_id_list':[], 
-	};
-	var odo_created = false,ido_created = false;
-	project_info.output_device_info.dm_name = "{{odm_name}}";
-
-</script>
-	<script src="/static/da/vp/dai.js"></script>
-	<script src="/static/da/proj_manage.js"></script>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3" id="left-col">
+        <div id="title">Ple<span id='hidden_link'>a</span>se scan following QRCode</div>
+        <img id="qrcode" src="">
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 container ">   
+        <div id="glowscript" class="glowscript"></div>
+    </div>
+    
+    <script type="text/javascript">
+        var p_id = "{{ p_id }}";
+        var odm_name = "{{ odm_name }}";
+        var url = "{{ url }}";
+        var d_name;
+        var odo_id = "{{ odo_id }}";
+    </script>
+    <script src="/static/da/vp/dai.js"></script>
+    <script src="/static/da/proj_manage.js"></script>
 </body>
 </html>
