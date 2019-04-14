@@ -1,14 +1,13 @@
-var mac_addr = 'Remote_control_' + odm_name;
+var mac_addr = d_name;
 var passwd = undefined;
 
 
 $(function () {
     
-    
     check_device_registered();
     initial();
     slider_handler();
-
+    sensor_handler();
 });
 
 function check_device_registered(){
@@ -24,10 +23,11 @@ function check_device_registered(){
 
 function initial(){
 
-    function register_callback(result, password = ''){
+    function register_callback(result, password){
         // console.log('rc result', result);
         registered = true;
-        passwd = password;
+        //for default parameter is not supported by es5
+        passwd = (typeof password != 'undefined') ? password : '';
         console.log('main.js:rc regietered');
     }
     var profile = {};
@@ -40,6 +40,10 @@ function initial(){
         console.log($(this).attr('name'));
         profile['df_list'].push($(this).attr('name'));
        
+    });
+
+    idf_list.forEach(function(df){
+        profile['df_list'].push(df);
     });
 
     console.log('profile: ', profile);

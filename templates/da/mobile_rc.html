@@ -16,13 +16,68 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
 </head>
 <body>
-    {% for index,df in enumerate(odf_list) %}
-        <div class="slidecontainer idf-block" name="{{'RangeSlider'+str(index+1)}}">
-            <div class="column slider">
-              <h4>{{ df[0] }}</h4>
-              <input type="range" min="0" max="100" step="1" value="50">
-            </div>
-        </div>
+    {% for df in enumerate(idf_list) %}
+        {% if 'Acceleration' in df %}
+          <div class="idf-block">
+            <section>
+              <h4>Acceleration</h4>
+            </section>
+            <section>
+              <div class="col col-xs-4 col-sm-4">
+                <label><i>x</i></label>
+                <span id="Ax">0</span>
+              </div>
+              <div class="col col-xs-4 col-sm-4">
+                <label><i>y</i></label>
+                <span id="Ay">0</span>
+              </div>
+              <div class="col col-xs-4 col-sm-4">
+                <label><i>z</i></label>
+                <span id="Az">0</span>
+              </div>
+            </section>
+          </div>
+        {% elif 'Gyroscope' in df %}
+          <div class="idf-block">
+            <section>
+              <h4>Gyroscope</h4>
+            </section>
+            <section>
+              <div class="col col-xs-4 col-sm-4">
+                <label><i>&alpha;</i></label>
+                <span id="Gx">0</span>
+              </div>
+              <div class="col col-xs-4 col-sm-4">
+                <label><i>&beta;</i></label>
+                <span id="Gy">0</span>
+              </div>
+              <div class="col col-xs-4 col-sm-4">
+                <label><i>&gamma;</i></label>
+                <span id="Gz">0</span>
+              </div>
+            </section>
+          </div>
+        {% elif 'Orientation' in df %}
+          <div class="idf-block">
+            <section>
+              <h4>Orientation</h4>
+            </section>
+            <section>
+              <div class="col col-xs-4 col-sm-4">
+                <label><i>&alpha;</i></label>
+                <span id="Ox">0</span>
+              </div>
+              <div class="col col-xs-4 col-sm-4">
+                <label><i>&beta;</i></label>
+                <span id="Oy">0</span>
+              </div>
+              <div class="col col-xs-4 col-sm-4">
+                <label><i>&gamma;</i></label>
+                <span id="Oz">0</span>
+              </div>
+            </section>
+          </div>
+        {% end %}
     {% end %}    
 
     <script type="text/javascript">
@@ -30,10 +85,10 @@
         var p_id = "{{p_id}}";
         var odm_name = "{{odm_name}}";
         var d_name = p_id + '.Control_' + odm_name;
-        let reg = /&#39;/g;
-        var odf_list = JSON.parse('{{ odf_list }}'.replace(reg, '"'));
+        var idf_list = JSON.parse('{{ idf_list }}'.replace(/&#39;/g,"\""));
         var registered = false;
     </script>
     <script src="/static/da/rc/mobile_rc_main.js"></script>
+    <script src="/static/da/rc/sensor.js"></script>
 </body>
 </html>

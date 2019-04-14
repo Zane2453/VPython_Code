@@ -1,4 +1,5 @@
-function my_ajax(ip, port, url, data, success_callback=null, async=true){
+function my_ajax(ip, port, url, data, success_callback){
+    success_callback = (typeof success_callback != 'undefined') ? success_callback : null;
     $.ajax({
         url: ip + ":" + port + url,
         type: 'POST',
@@ -6,7 +7,6 @@ function my_ajax(ip, port, url, data, success_callback=null, async=true){
         cache: false,
         processData: false,
         contentType: false,
-        async: async,
         dataType: 'json',
         error:function(e){
             if(e.status != 404 && success_callback){
@@ -38,7 +38,8 @@ function query_d_id(d_name, callback){
 }   
 
 //bind device
-function bind_device(odo_id,d_name, d_id, callback=null){
+function bind_device(odo_id,d_name, d_id, callback){
+    callback = (typeof callback != 'undefined') ? callback : null;
     var device_save_info = [ odo_id, d_name, d_id];
     var form_data = new FormData();
     form_data.append('device_save_info', JSON.stringify(device_save_info));
