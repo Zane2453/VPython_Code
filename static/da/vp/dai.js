@@ -63,6 +63,7 @@ const dai = function (profile) {
     function init_callback (result) {
         // document.title = profile.d_name;
         d_name = profile.d_name;
+        device_mac_addr = mac_addr;
     }
 
     function deregisterCallback (result) {

@@ -14,18 +14,18 @@ project_set = {}
         'dm_name': null,
         'dm_id': null,
         'do_id': 0,
-        'df_list': [], //[{'id':df_id, 'name:', df_name}]
+        'df_list': [{'id':df_id, 'name':df_name}],
     },
     'output_device_info':{
         'dm_name': null,
         'dm_id': null,
         'do_id': 0,
-        'df_list':[], //[{'id':df_id, 'name:', df_name}]
+        'df_list':[{'id':df_id, 'name':df_name}],
         'mac_addr': null,
     },
     'na_id_list':[],
     'fn_id_list':[], 
-    }
+    },
 }
 '''
 
@@ -60,35 +60,29 @@ def get_model_info(new_p_id, model_name, in_out):
     model_info = {'model_name':model_name, 'p_id':new_p_id};
     data = {'model_info': json.dumps(model_info)}
     response = post_to_ccm('/get_model_info', data)
+
+    def create_feature_list(name, idf_list, odf_list, model_id):
+        project_set[new_p_id][name]['dm_name'] = model_name;
+        project_set[new_p_id][name]['dm_id'] = model_id;
+        return {
+            'idf_list': idf_list,
+            'odf_list': odf_list,
+            'model_name': response['model_name'],
+            'do_id': 0,
+            'p_id': new_p_id,
+        }
+
     if in_out == 'out':
-        project_set[new_p_id]['output_device_info']['dm_name'] = model_name;
-        project_set[new_p_id]['output_device_info']['dm_id'] = response['model_id'];
-        feature_list = {
-            'idf_list': [],
-            'odf_list': response['odf'],
-            'model_name': response['model_name'],
-            'do_id': 0,
-            'p_id': new_p_id,
-        }
+        feature_list = create_feature_list('output_device_info', [], response['odf'], response['model_id'])
     else:
-        project_set[new_p_id]['input_device_info']['dm_name'] = model_name;
-        project_set[new_p_id]['input_device_info']['dm_id'] = response['model_id'];
-        feature_list = {
-            'idf_list': response['idf'],
-            'odf_list': [],
-            'model_name': response['model_name'],
-            'do_id': 0,
-            'p_id': new_p_id,
-        }
+        feature_list = create_feature_list('input_device_info', response['idf'], [], response['model_id'])
     data = {'model_info': json.dumps(feature_list)}
     response = post_to_ccm('/save_device_object_info', data)
-    print('save do info resp:',response)
 
 
 def reload_data(new_p_id): 
     data = {'p_id': new_p_id}
     response = post_to_ccm('/reload_data', data)
-    print('$$$$$$reload ', response)
     in_device_info = response['in_device'][0];
     out_device_info = response['out_device'][0];
 
@@ -104,22 +98,32 @@ def reload_data(new_p_id):
     for odf_info in out_device_info['p_odf_list']:
         project_set[new_p_id]['output_device_info']['df_list'].append({'id':odf_info[1],'name':odf_info[0]})
 
-    
+# create connection between idf and odfs(1 to n)
 def create_connection(new_p_id):
     for i in range(len(project_set[new_p_id]['output_device_info']['df_list'])):
+        '''
+        this is for multi-idf and idf to odf is 1 to 1
         connect_info = ["Join "+str(i+1),i,project_set[new_p_id]['input_device_info']['df_list'][i]['id'],project_set[new_p_id]['output_device_info']['df_list'][i]['id']];
+        '''
+        connect_info = ["Join "+str(i+1),i,project_set[new_p_id]['input_device_info']['df_list'][0]['id'],project_set[new_p_id]['output_device_info']['df_list'][i]['id']];
         data = {'setting_info': json.dumps({'connect_info': connect_info, 'p_id': new_p_id})}
         response = post_to_ccm('/save_connection_line', data)
         project_set[new_p_id]['na_id_list'].append(response['na_id'])
 
-def delete_project_handler(p_id):
+
+def delete_project_handler(p_id, mac_addr):
+    print('delete_project p_id=',p_id,' mac_addr=',mac_addr)
     data = {'p_id': p_id}
-    print('delete p_id=',p_id,'post to ccm')
+    deregister(mac_addr)
     response = post_to_ccm('/delete_project', data)
-    print('resp=',response)
-    if p_id in project_set:
-        del project_set[p_id]
-        print('delete p_id=',p_id,'from project_set')
+    if int(p_id) in project_set:
+        del project_set[int(p_id)]
+
+def deregister(mac_addr):
+    print('deregister mac_addr ',mac_addr)
+    r = requests.delete(config.iottalk_ip + ':' + config.csm_port + '/' + mac_addr)
+    if r.status_code != 200: raise CSMError(r.text)
+    return True
 
 def post_to_ccm(url, data):
     r = requests.post(config.iottalk_ip+":"+config.ccm_port+url, data=data)

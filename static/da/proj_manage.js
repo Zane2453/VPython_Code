@@ -1,27 +1,16 @@
-$( window ).on( "load",  function () {
+$(window).on("load",function(){
     check_device_registered();
     turn_on_project();
     create_QRcode();
 });
 
-window.onunload = function(){
-    csmapi.deregister(mac_addr, null);
+$(window).bind('beforeunload',function(){
+    /*
+        Send request to cyberphysic server, then server delete project related info and deregister for this da.
+        Didn't deregister here because of time limit(There is just enough time for one request).
+    */
     delete_project();
-};
-
-window.onbeforeunload = function(){
-    csmapi.deregister(mac_addr, null);
-    delete_project();
-    return null;
-};
-window.onclose = function(){
-    csmapi.deregister(mac_addr, null);
-    delete_project();
-};
-window.onpagehide = function(){
-    csmapi.deregister(mac_addr, null);
-    delete_project();
-};
+});
 
 function check_device_registered(){
     console.log('d_name:',d_name);
@@ -44,30 +33,15 @@ function turn_on_project(){
 }
 
 function create_QRcode(){
+    let url = cyberphysic_server_ip + ":"+ cyberphysic_server_port + "/rc/"+ str(p_id);
     let QRcode_url = "https://chart.googleapis.com/"
                 +"chart?chs=250x250&cht=qr&choe=UTF-8&chl="
-                +url;
+                + url;
     $('#qrcode').attr('src',QRcode_url);
     $('#hidden_link').on('click',function(){
         window.open(url);
     });
 }
-
-/*
-function check_vp_reset(){
-    var form_data = new FormData();
-    form_data.append('p_id', project_info.p_id);
-    var response = my_ajax(cyberphysic_server_ip, cyberphysic_server_port, '/is_reset', form_data);
-    
-    if(response.is_reset){
-        //reload iframe and bind device
-        console.log("vp is_reset resp:",response);
-        $('#device-iframe').get(0).contentWindow.location.reload();
-        setTimeout(check_iframe_loaded,1000);
-    }
-    setTimeout(check_vp_reset,1000);
-}
-*/
 
 function get_proj_exception(){
     var form_data = new FormData();
@@ -82,17 +56,10 @@ function get_proj_exception(){
 }
 
 function delete_project(){
-    var form_data = new FormData();
-    form_data.append('p_id', p_id);
-
     $.ajax({
-        url: cyberphysic_server_ip + ":" + cyberphysic_server_port + '/delete_project',
+        url: cyberphysic_server_ip + ":" + cyberphysic_server_port + '/delete_project/' + p_id + '/' + device_mac_addr,
         type: 'DELETE',
-        data: form_data,
         cache: false,
-        processData: false,
-        contentType: false,
-        async: async,
         dataType: 'json',
         error:function(e){
             console.log(url, ' error, e= ',e);
