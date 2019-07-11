@@ -1,7 +1,7 @@
-function my_ajax(ip, port, url, data, success_callback){
+function my_ajax(ip, path, url, data, success_callback){
     success_callback = (typeof success_callback != 'undefined') ? success_callback : null;
     $.ajax({
-        url: ip + ":" + port + url,
+        url: ip + path + url,
         type: 'POST',
         data: data,
         cache: false,
@@ -30,11 +30,7 @@ function query_d_id(d_name, callback){
     var form_data = new FormData();
     form_data.append('d_name', d_name);
 
-    my_ajax(iottalk_ip, ccm_port, '/get_d_id_from_d_name', form_data, callback);    
-    /*
-    var d_id = my_ajax(iottalk_ip, ccm_port, '/get_d_id_from_d_name',form_data);
-    bind_device(project_info.output_device_info.do_id,d_name,d_id);
-    */
+    my_ajax(iottalk_server, ccm_path, '/get_d_id_from_d_name', form_data, callback);
 }   
 
 //bind device
@@ -45,5 +41,5 @@ function bind_device(odo_id,d_name, d_id, callback){
     form_data.append('device_save_info', JSON.stringify(device_save_info));
 
     console.log("bind_device: ",device_save_info);
-    my_ajax(iottalk_ip, ccm_port, '/bind_device', form_data, callback);
+    my_ajax(iottalk_server, ccm_path, '/bind_device', form_data, callback);
 }

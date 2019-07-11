@@ -29,11 +29,11 @@ function turn_on_project(){
     var form_data = new FormData();
     form_data.append('p_id', p_id);
 
-    my_ajax(iottalk_ip, ccm_port, '/turn_on_project', form_data);
+    my_ajax(iottalk_server, ccm_path, '/turn_on_project', form_data);
 }
 
 function create_QRcode(){
-    let url = cyberphysic_server_ip + ":"+ cyberphysic_server_port + "/rc/"+ str(p_id);
+    let url = cyberphysic_server + "/rc/"+ str(p_id);
     let QRcode_url = "https://chart.googleapis.com/"
                 +"chart?chs=250x250&cht=qr&choe=UTF-8&chl="
                 + url;
@@ -47,7 +47,7 @@ function get_proj_exception(){
     var form_data = new FormData();
     form_data.append('p_id', p_id);
 
-    my_ajax(iottalk_ip, ccm_port, '/get_exception_status', form_data, function(response){
+    my_ajax(iottalk_server, ccm_path, '/get_exception_status', form_data, function(response){
         console.log("get_exception_status:",response);
         if(response.redraw == true){
             setTimeout(get_proj_exception,100);
@@ -57,7 +57,7 @@ function get_proj_exception(){
 
 function delete_project(){
     $.ajax({
-        url: cyberphysic_server_ip + ":" + cyberphysic_server_port + '/delete_project/' + p_id + '/' + device_mac_addr,
+        url: cyberphysic_server+ '/delete_project/' + p_id + '/' + device_mac_addr,
         type: 'DELETE',
         cache: false,
         dataType: 'json',

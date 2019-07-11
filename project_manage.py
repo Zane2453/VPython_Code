@@ -124,12 +124,12 @@ def delete_project_handler(p_id, mac_addr):
 
 def deregister(mac_addr):
     print('deregister mac_addr ',mac_addr)
-    r = requests.delete(config.iottalk_ip + ':' + config.csm_port + '/' + mac_addr)
+    r = requests.delete(config.iottalk_server + csm_path + '/' + mac_addr)
     if r.status_code != 200: raise CSMError(r.text)
     return True
 
 def post_to_ccm(url, data):
-    r = requests.post(config.iottalk_ip+":"+config.ccm_port+url, data=data)
+    r = requests.post(config.iottalk_server + ccm_path + url, data=data)
     try:
         response = tornado.escape.json_decode(r.text)
     except:

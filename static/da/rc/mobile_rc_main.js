@@ -51,7 +51,7 @@ function initial(){
 
     profile['is_sim'] = false;
 
-    csmapi.set_endpoint(iottalk_ip + ":9999");
+    csmapi.set_endpoint(iottalk_server + "/csm");
     csmapi.register(mac_addr, profile, register_callback);
 
 }

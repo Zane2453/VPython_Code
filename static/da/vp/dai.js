@@ -3,7 +3,7 @@
 
 const dai = function (profile) {
     // csmapi.set_endpoint (window.location.origin);
-    csmapi.set_endpoint (iottalk_ip+":"+csm_port);
+    csmapi.set_endpoint (iottalk_server + csm_path);
     console.log('ep:',csmapi.get_endpoint())
 
     var odf_func = {};
