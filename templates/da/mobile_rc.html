@@ -17,7 +17,7 @@
 </head>
 <body>
     {% for df in enumerate(idf_list) %}
-        {% if 'Acceleration' in df %}
+        {% if 'Acceleration' in df[1] %}
           <div class="idf-block">
             <section>
               <h4>Acceleration</h4>
@@ -37,7 +37,7 @@
               </div>
             </section>
           </div>
-        {% elif 'Gyroscope' in df %}
+        {% elif 'Gyroscope' in df[1] %}
           <div class="idf-block">
             <section>
               <h4>Gyroscope</h4>
@@ -57,7 +57,7 @@
               </div>
             </section>
           </div>
-        {% elif 'Orientation' in df %}
+        {% elif 'Orientation' in df[1] %}
           <div class="idf-block">
             <section>
               <h4>Orientation</h4>
@@ -76,6 +76,14 @@
                 <span id="Oz">0</span>
               </div>
             </section>
+          </div>
+        {% elif 'RangeSlider' in df[1] %}
+          {% set odf_id=df[1][len(df[1])-1] %}
+          <div class="slidecontainer idf-block" name="{{ _(df[1]) }}">
+            <div class="column slider">
+              <h4>{{ odf_list[int(odf_id)-1] }}</h4>
+              <input type="range" min="0" max="100" step="1" value="50">
+            </div>
           </div>
         {% end %}
     {% end %}    

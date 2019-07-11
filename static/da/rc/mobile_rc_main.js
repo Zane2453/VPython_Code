@@ -35,13 +35,14 @@ function initial(){
     profile['dm_name'] = 'Remote_control_' + odm_name;
     profile['df_list'] = [];
 
+    /*
 	$('.slidecontainer').each(function(index){
         console.log(index);
         console.log($(this).attr('name'));
         profile['df_list'].push($(this).attr('name'));
        
     });
-
+    */
     idf_list.forEach(function(df){
         profile['df_list'].push(df);
     });

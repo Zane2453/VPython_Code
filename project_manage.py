@@ -101,11 +101,14 @@ def reload_data(new_p_id):
 # create connection between idf and odfs(1 to n)
 def create_connection(new_p_id):
     for i in range(len(project_set[new_p_id]['output_device_info']['df_list'])):
-        '''
-        this is for multi-idf and idf to odf is 1 to 1
+        
+        # this is for multi-idf and idf to odf is 1 to 1
         connect_info = ["Join "+str(i+1),i,project_set[new_p_id]['input_device_info']['df_list'][i]['id'],project_set[new_p_id]['output_device_info']['df_list'][i]['id']];
+        
         '''
+        this is for idf to odf 1 to n
         connect_info = ["Join "+str(i+1),i,project_set[new_p_id]['input_device_info']['df_list'][0]['id'],project_set[new_p_id]['output_device_info']['df_list'][i]['id']];
+        '''
         data = {'setting_info': json.dumps({'connect_info': connect_info, 'p_id': new_p_id})}
         response = post_to_ccm('/save_connection_line', data)
         project_set[new_p_id]['na_id_list'].append(response['na_id'])
