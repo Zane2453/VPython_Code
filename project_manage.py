@@ -83,8 +83,8 @@ def get_model_info(new_p_id, model_name, in_out):
 def reload_data(new_p_id): 
     data = {'p_id': new_p_id}
     response = post_to_ccm('/reload_data', data)
-    in_device_info = response['in_device'][0];
-    out_device_info = response['out_device'][0];
+    in_device_info = response['in_device'][0]
+    out_device_info = response['out_device'][0]
 
     #save input_device_info
     project_set[new_p_id]['input_device_info']['do_id'] = in_device_info['in_do_id']
@@ -124,12 +124,12 @@ def delete_project_handler(p_id, mac_addr):
 
 def deregister(mac_addr):
     print('deregister mac_addr ',mac_addr)
-    r = requests.delete(config.iottalk_server + csm_path + '/' + mac_addr)
+    r = requests.delete(config.iottalk_server + config.csm_path + '/' + mac_addr)
     if r.status_code != 200: raise CSMError(r.text)
     return True
 
 def post_to_ccm(url, data):
-    r = requests.post(config.iottalk_server + ccm_path + url, data=data)
+    r = requests.post(config.iottalk_server + config.ccm_path + url, data=data)
     try:
         response = tornado.escape.json_decode(r.text)
     except:
