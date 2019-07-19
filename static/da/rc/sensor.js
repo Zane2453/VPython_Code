@@ -4,20 +4,26 @@ var acc  = {};
 var gyro = {};
 var orient = {};
 
-var push_interval = 250;
+var push_interval = 150;
 
 function sensor_handler(){
-    set_sensor_handler();
-
-    requestAnimationFrame(update_layout);
-    setInterval(push_sensor_value, push_interval);
+    let name_info = ['Acceleration-I','Gyroscope-I','Orientation-I'];
+    
+    if(idf_list.some(function(idf_name){
+        return ($.inArray(idf_name, name_info) != -1)
+    })){
+        set_sensor_handler();
+        requestAnimationFrame(update_layout);
+        setInterval(push_sensor_value, push_interval);
+    }
+    
 }
 
 
 function set_sensor_handler(){
     console.log('set sensor handler');
     let sensor_info = {
-        'Acceleration': 'accelerationIncludingGravity',
+        'Acceleration': 'acceleration',
         'Gyroscope': 'rotationRate',
     }
 
@@ -54,9 +60,9 @@ function set_sensor_handler(){
 
 function push_sensor_value(){
     let name_info = [
-        ['Acceleration', 'acc', acc, null],
-        ['Gyroscope', 'gyr', gyro, null],
-        ['Orientation', 'ori', orient, null],
+        ['Acceleration-I', 'acc', acc, null],
+        ['Gyroscope-I', 'gyr', gyro, null],
+        ['Orientation-I', 'ori', orient, null],
     ];
 
     name_info.forEach(function(info){

@@ -1,0 +1,20 @@
+h4, div {
+	font-family: monospace, Arial, Sans-serif;
+	font-weight: normal;
+}
+
+section>h4{
+	padding-left: 12px;
+}
+
+.idf-block {
+	margin-bottom: 30px;
+        margin-left: 15px;
+}
+
+.idf-title {
+	font-family: monospace, Arial, Sans-serif;
+	margin-bottom: 5px;
+}
+
+

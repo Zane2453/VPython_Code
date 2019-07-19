@@ -25,9 +25,9 @@ const dai = function (profile) {
     profile['df_list']=[];
     for (var i = 0; i < profile.odf_list.length; i++) {
         odf_name = profile.odf_list[i].name;
-        if(odf_name[odf_name.length-2] == '_'){
-            odf_name = odf_name.substr(0, odf_name.length-2) + '-' + odf_name.substr(odf_name.length-1);
-        }
+        // if(odf_name[odf_name.length-2] == '_'){
+        //     odf_name = odf_name.substr(0, odf_name.length-2) + '-' + odf_name.substr(odf_name.length-1);
+        // }
         odf_func[odf_name] = profile.odf_list[i];
 		profile.odf_list[i] = odf_name;
 		profile['df_list'].push(odf_name);
@@ -36,9 +36,9 @@ const dai = function (profile) {
 	
     for (var i = 0; i < profile.idf_list.length; i++) {
         idf_name = profile.idf_list[i].name;
-        if(idf_name[idf_name.length-2] == '_'){
-            idf_name = idf_name.substr(0, idf_name.length-2) + '-' + idf_name.substr(idf_name.length-1);
-        }
+        // if(idf_name[idf_name.length-2] == '_'){
+        //     idf_name = idf_name.substr(0, idf_name.length-2) + '-' + idf_name.substr(idf_name.length-1);
+        // }
         idf_func[idf_name] = profile.idf_list[i];
 		profile.idf_list[i] = idf_name;
 		profile['df_list'].push(idf_name);
