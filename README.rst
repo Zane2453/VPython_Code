@@ -2,7 +2,13 @@
 
 A platform for user to scan QRcode and play vpython by automatically create iottalk project and bind devices.
 
-server example: https://hu.iottalk.tw  
+server example: https://hu.iottalk.tw
+
+Requirement
+------------
+``tornado``
+
+
 
  
 Server Configuration
@@ -99,15 +105,15 @@ Add new Vpython
 
 #.  put your vpython file (.py) under ``CyberPhysic/vp/py``    
 
-        Note: file name is your vpython device model name which cannot be duplicate with other device models in iottalk server
+    Note: file name is your vpython device model name which cannot be duplicate with other device models in iottalk server
 
 #.  open browser and go to http://hu.iottalk.tw:7788/dfm , create new output device model (and odf if needed):
 
-        Ex. ODM: Universe, ODF: Gravity, Speed
+    Ex. ODM: Universe, ODF: Gravity, Speed
      
     
-        If you want to control by smartphone, 
-        please just use existing ODF Acceleration_O, Gyroscope_O or Orientation_O 
+    If you want to control by smartphone, 
+    please just use existing ODF Acceleration_O, Gyroscope_O or Orientation_O 
     
     
 #.  create new input device model with IDFs in [RangeSlide1, RangeSlider2]:
@@ -116,9 +122,9 @@ Add new Vpython
         
     Ex. IDM: Remote_control_Universe, IDF: [RangeSlider1, RangeSlider2]
     
-        If you want to control by smartphone, 
-        please just use existing IDF Acceleration-I, Gyroscope-I or Orientation-I. 
-        This will push the raw data of acceleraiton, gyroscope or orientation. 
-        Ex. IDM: Remote_control_Ball-collision, IDF: Acceleration-I.
+    If you want to control by smartphone, 
+    please just use existing IDF Acceleration-I, Gyroscope-I or Orientation-I. 
+    This will push the raw data of acceleraiton, gyroscope or orientation. 
+    Ex. IDM: Remote_control_Ball-collision, IDF: Acceleration-I.
         
-#.  Done. Go back to CyberPhysic homepage and start to play.
+#.  Done. Go back to CyberPhysic homepage.
