@@ -15,9 +15,9 @@ def SpringForce(r,L):    #擺錘所受的彈力
 
 def scene_init():
     global value_label
-    scene = canvas(width = 600, height = 600, center = vector(0, -0.55, d*n/2+0.15), range=0.9, background = vector(0.5, 0.5, 0))     
+    scene = canvas(width = 800, height = 800, center = vector(0, -0.55, d*n/2+0.15), range=0.9, background = vector(0.5, 0.5, 0))     
     ceiling = box(pos=vector(0,0,(n-1)*d/2), length=0.03, height=0.001, width=(n-1)*d*1.01, color=vector(0.7,0.7,0.7))    
-    value_label = label( pos=vector(0.8,0.4,0), text='Mass: {:.3f}\nGravity: {:.3f}'.format(m,g))
+    value_label = label( pos=vector(0.8,0.4,0), height=25, text='Mass: {:.3f}\nGravity: {:.3f}'.format(m,g))
     #hint_label = label( pos=vector(0.8,0.2,0), text='Mass不可小於零，已還原初始值', visible=False)
     ball_init()
 
