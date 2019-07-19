@@ -12,10 +12,9 @@
     <div class="container vp_list">
         <div class="col-md-3 mx-auto">
             <h2>choose application</h2>
-            <a href="/project/Ball-throw2" class="list-group-item">Ball-throw2</a>
-            <a href="/project/Precession" class="list-group-item">Precession</a>
-            <a href="/project/Universe" class="list-group-item">Universe</a>
-            <a href="/project/Snakepend" class="list-group-item">Snakepend</a>
+            {% for vp in vp_list %}
+            <a href="/project/{{ vp }}" class="list-group-item">{{ vp }}</a>
+            {% end %}
         </div>
     </div>
 </body>

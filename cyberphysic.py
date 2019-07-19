@@ -1,6 +1,8 @@
 import tornado.ioloop
 import tornado.web
 import os
+from os import listdir
+from os.path import join
 import json
 import math
 import sys
@@ -8,7 +10,6 @@ import sys
 import config
 import project_manage
 
-vp_list = ['Ball-throw2', 'Precession', 'Snakepend', 'Universe']
 no_cache_headers = {
     'Cache-Control': ('no-store, no-cache, must-revalidate, '
                       'post-check=0, pre-check=0, max-age=0'),
@@ -54,7 +55,7 @@ class choose_vp_handler(tornado.web.RequestHandler):
 
 class chooseProjectHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("main_page.html")
+        self.render("main_page.html", vp_list=vp_list)
 
 class projectHandler(tornado.web.RequestHandler):
     def get(self, **kwargs):
@@ -109,4 +110,10 @@ if __name__ == "__main__":
     app = make_app()
     app.listen(config.port)
     print("======== server start ========")
+    global vp_list
+    print('working directory:',os.getcwd())
+    vp_file_list = listdir(join(os.getcwd(), 'vp/py'))
+    vp_list = list(map(lambda x: x[:-3],vp_file_list))
+    vp_list.sort()
+    print('vp_list:',vp_list)
     tornado.ioloop.IOLoop.current().start()
