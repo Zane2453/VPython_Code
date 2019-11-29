@@ -6,7 +6,7 @@ server example: https://hu.iottalk.tw
 
 Requirement
 ------------
-``tornado``
+``tornado5.1.1`` if your python3 version is older than 3.5.2
 
 
 
