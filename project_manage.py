@@ -86,11 +86,14 @@ def reload_data(new_p_id):
     in_device_info = response['in_device'][0]
     out_device_info = response['out_device'][0]
 
-    #save input_device_info
+    # save input_device_info
     project_set[new_p_id]['input_device_info']['do_id'] = in_device_info['in_do_id']
     project_set[new_p_id]['input_device_info']['df_list'] = []
     for idf_info in in_device_info['p_idf_list']:
-        project_set[new_p_id]['input_device_info']['df_list'].append({'id':idf_info[1],'name':idf_info[0]})
+        # get df parameter
+        data = {'model_info':json.dumps({'df_name': idf_info[0],'dm_id': project_set[new_p_id]['input_device_info']['dm_id']})}
+        response = post_to_ccm('/get_device_feature_info', data)
+        project_set[new_p_id]['input_device_info']['df_list'].append({'id':idf_info[1],'name':idf_info[0],'parameter':response['df_parameter']})
 
     #save output_device_info
     project_set[new_p_id]['output_device_info']['do_id'] = out_device_info['out_do_id']

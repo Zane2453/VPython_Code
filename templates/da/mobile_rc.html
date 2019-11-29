@@ -83,7 +83,7 @@
           <div class="slidecontainer idf-block" name="{{ _(df[1]) }}">
             <div class="column slider">
               <h4>{{ odf_list[int(odf_id)-1] }}</h4>
-              <input type="range" min="0" max="100" step="1" value="50">
+              <input type="range" min={{idf_para_list[df[0]][0][0]}} max={{idf_para_list[df[0]][0][1]}} step="0.1" value={{idf_para_list[df[0]][0][2]}}>
             </div>
           </div>
         {% end %}

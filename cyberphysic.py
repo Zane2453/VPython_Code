@@ -77,15 +77,20 @@ class rcHandler(tornado.web.RequestHandler):
             odm_id = project_info['output_device_info']['dm_id']
             in_do_id = project_info['input_device_info']['do_id']
             idf_list = []
+            idf_para_list = []
             odf_list = []
             for df in project_info['input_device_info']['df_list']:
+                para = []
+                for parameter in df['parameter']:
+                    para.append([parameter[1],parameter[2],(parameter[1]+parameter[2])/2])
                 idf_list.append(df['name'])
+                idf_para_list.append(para)
             for df in project_info['output_device_info']['df_list']:
                 odf_list.append(df['name'])
             for key, val in no_cache_headers.items():
                 self.set_header(key, val)
             print('idf_list', idf_list)
-            self.render("da/mobile_rc.html", odm_name=odm_name, p_id=p_id, in_do_id=in_do_id, idf_list=idf_list, odf_list=odf_list)
+            self.render("da/mobile_rc.html", odm_name=odm_name, p_id=p_id, in_do_id=in_do_id, idf_list=idf_list, odf_list=odf_list, idf_para_list=idf_para_list)
         else:
             self.write("Please rescan QRCode.");
 
