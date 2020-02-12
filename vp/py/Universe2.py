@@ -16,7 +16,7 @@ setup()
 
 moon_radius = 0.8 # 球半徑(m)
 height = 12.0     # 初始高度(m)
-speed = 6.0        # 初始速度
+speed = 5.5        # 初始速度
 gravity = 9.8          # 萬有引力常數
 direction = vec(1,0,0) # 初始方向
 
@@ -40,8 +40,9 @@ def reset_moon():
 # 初始化場景
 def scene_init():
     global scene, moon, earth, height, moon_radius, label_gravity
-    scene = display(width=800, height=700, center = vec(0, -10, -80), background=vec(0, 0, 0))
-    label_gravity = label( pos=vec(20,10,0), height=20, text='Gravity: {:.3f}\nSpeed: {:.3f}'.format(gravity,speed))
+    scene = display(width=800, height=700, center = vec(0, -2, -40), background=vec(0, 0, 0))
+#    scene = display(width=800, height=700, center = vec(0, -2, -40), background=color.white)
+    label_gravity = label( pos=vec(17,15,0), height=20, text='Gravity: {:.3f}\nSpeed: {:.3f}'.format(gravity,speed))
     
 
     earth = sphere(
