@@ -34,10 +34,11 @@ function turn_on_project(){
 
 function create_QRcode(){
     let url = cyberphysic_server + "/rc/"+ str(p_id);
-    let QRcode_url = "https://chart.googleapis.com/"
-                +"chart?chs=250x250&cht=qr&choe=UTF-8&chl="
-                + url;
-    $('#qrcode').attr('src',QRcode_url);
+    $('#qrcode').qrcode({
+      width: 250,
+      height: 250,
+      text: url});
+
     $('#hidden_link').on('click',function(){
         window.open(url);
     });

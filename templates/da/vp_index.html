@@ -7,6 +7,7 @@
     <link href="/resources/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <title>project -- {{odm_name}}</title>
     <script src="/resources/static/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
     <script src="/resources/static/config.js"></script>
 
     <script src="/resources/static/da/utility.js"></script>
@@ -24,7 +25,7 @@
 <body>
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3" id="left-col">
         <div id="title">Ple<span id='hidden_link'>a</span>se scan following QRCode</div>
-        <img id="qrcode" src="">
+        <div id="qrcode"></div>
     </div>
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 container ">   
         <div id="glowscript" class="glowscript"></div>
