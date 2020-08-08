@@ -41,7 +41,7 @@ preloadAudio('Startup.wav')
 preloadAudio('chord.wav')
 preloadAudio('gj.wav')
 
-# Modified by Zane 2020/07/05
+# Modified by Zane 2020/08/08
 def axisInit():
     global axis, labels
     a = -21
@@ -56,9 +56,10 @@ def axisInit():
     for j in range(0,10):
         axis.append(box(pos=vec(a + c/2,b + (j+1)*(d/10),-2), length=c, height=0.1, width=0.1,color=color.gray(0.8)))
     
-    for x in range(0,6):
+    labels.append(label(pos=vec(a + 0*(c/5),b + d+ d/10,-1.5), text = str(0*(c/5)), height = 20, border = 12, font = 'monospace', color = color.white, box = False, opacity=0))
+    for x in range(1,6):
         num = str(x*(c/5))
-        labels.append(label(pos=vec(a + x*(c/5),b-2*d/20,-2), text = num, height = 20, border = 12, font = 'monospace', color = color.white, box = False))
+        labels.append(label(pos=vec(a + x*(c/5),b + d + d/10,-2), text = num, height = 20, border = 12, font = 'monospace', color = color.white, box = False, opacity=0))
     
     for y in range(0,6):
         num = str(b+y*(d/5))

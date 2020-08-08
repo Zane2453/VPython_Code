@@ -59,7 +59,7 @@ def scene_init():
     sun_light = local_light(pos = vec(0,0,0),color=color.white)
     more_sun_light = local_light(pos = vec(0,0,0),color=color.white)
     
-    for radius in range(15):
+    for radius in range(2, 15):
     	axis.append(ring(pos=vec(0,0,-5), axis=vec(0,0,1), radius=radius*2, thickness=0.1, color=color.gray(0.1)))
 		
     for radius in range(2, 15):
